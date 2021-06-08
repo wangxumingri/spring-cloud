@@ -1,0 +1,45 @@
+server:
+  port: 10001
+spring:
+  application:
+    name: service-consumer-feign
+  # 配置 Consul 注册中心
+  cloud:
+    consul:
+      # 注册中心的访问地址
+      host: localhost
+      port: 8500
+      # 服务提供者信息
+      discovery:
+        register: false                                              # 是否需要注册:服务消费者不需要注册
+#        instance-id: ${spring.application.name}-01                  # 注册实例id 必须唯一
+#        service-name: ${spring.application.name}                    # 服务名称
+#        port: ${server.port}                                        # 服务端口
+#        prefer-ip-address: true                                     # 是否使用 IP 地址注册
+#        ip-address: ${spring.cloud.client.ip-address}               # 服务请求ip
+
+# 配置 feign
+feign:
+  compression:
+    request:
+      enabled: true                                                   # 开启客户端对请求的压缩
+      mime-types:  ["text/xml","application/xml","application/json"]  # 制定需要压缩的 MIME 类型
+      min-request-size: 1024                                          # 最小压缩阈值 (字节),达到该阈值才会进行压缩
+    response:
+      enabled: true                                                   # 开启客户端对响应的压缩
+  client:
+    config:
+      default:
+        connectTimeout: 3000                                          # 指定Feign连接提供者的超时时限，其取决于网络环境
+        readTimeout: 3000                                             # 指定Feign从请求到最终获取到提供者的响应的超时时限，其取决于提供者的业务复杂性
+  # 配置 okhttp
+#  okhttp:
+#    enabled: true                                                     # 使用 okhttp 替代 HttpURLConnection
+
+  # 配置 httpclient
+  httpclient:
+    enabled: true                                                     # 使用 httpclient 替代 HttpURLConnection
+# 日志配置
+logging:
+  level:
+    com.wxss.feign.service: DEBUG                                     # 修改了feign默认配置级别后，还需要修改客户端feign 接口的打印级别

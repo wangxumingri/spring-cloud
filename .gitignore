@@ -1,0 +1,4 @@
+# Project exclude paths
+/consul-demo/service-consumer/target/
+/consul-demo/service-consumer-feign/target/
+/consul-demo/service-provider/target/
