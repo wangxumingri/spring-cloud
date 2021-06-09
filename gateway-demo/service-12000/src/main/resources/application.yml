@@ -1,0 +1,20 @@
+server:
+  port: 12000
+spring:
+  application:
+    name: service-12000
+  cloud:
+    gateway:
+      routes:
+        - id: host_route1                # 自定义的路由 ID，保持唯一
+          uri: http://localhost:12100
+          predicates:
+            - Path=/121/**
+          filters:
+            - StripPrefix=2             # 从头开始使用空字符串覆盖Path中 1 段内容，如 http://localhost:12100/121/1/2,最终处理后的PATH为 /2
+        - id: host_route2
+          uri: http://localhost:12200
+          predicates:
+            - Path=/122/**
+          filters:
+            - StripPrefix=1

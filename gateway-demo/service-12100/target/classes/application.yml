@@ -1,0 +1,5 @@
+server:
+  port: 12100
+spring:
+  application:
+    name: service-12100
